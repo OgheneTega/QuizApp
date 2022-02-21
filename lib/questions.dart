@@ -2,7 +2,7 @@ class Question {
   final String questions;
   bool answers;
 
-  Question(this.questions, this.answers);
+  Question(this.questions, this.answers); //constructor for the Question class
 
 // This is a constructor using the two properties given above
 
