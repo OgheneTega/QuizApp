@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizzler/questions.dart';
+import 'package:quizzler/quiz_brain.dart';
 // import 'quiz_brain.dart';
 
 // QuizBrain quizBrain = QuizBrain();
@@ -10,6 +11,8 @@ class Quizzler extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner:
+          false, //takes out that annoying banner on the top right corner
       home: Scaffold(
         backgroundColor: Colors.grey.shade900,
         body: SafeArea(
@@ -30,21 +33,31 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Widget> scoreKeeper = [];
+
   // List<String> questions = [
   //   'You can lead a cow down stairs but not up stairs.',
   //   'Approximately one quarter of human bones are in the feet.',
   //   'A slug\'s blood is green.'
   // ];
-  //
+
   // List<bool> answers = [false, true, true];
-  List<Question> questionBank = [
-    Question('You can lead a cow down stairs but not up stairs.', false),
-    Question('Approximately one quarter of human bones are in the feet.', true),
-    Question('A slug\'s blood is green.', true)
-  ];
+  // List<Question> questionBank = [
+  //   Question('You can lead a cow down stairs but not up stairs.', false),
+  //   Question('Approximately one quarter of human bones are in the feet.', true),
+  //   Question('A slug\'s blood is green.', true)
+  // ];
+
+  QuizBrain quizBrain =
+      QuizBrain(); // creating an instance of QuizBrain class so you don't need those lists up
+  //as you are able to access the QuizBrain class directly
+
   int questionNumber = 0;
+  Question questionSrc; //a variable of Question class which we'll use below
+
   @override
   Widget build(BuildContext context) {
+    questionSrc = quizBrain.questionBank[
+        questionNumber]; //helping to make your code shorter by passing this long ass fn to a variable
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -54,8 +67,8 @@ class _QuizPageState extends State<QuizPage> {
           child: Padding(
             padding: EdgeInsets.all(10.0),
             child: Center(
-              child: Text(
-                questionBank[questionNumber].questions,
+              child: new Text(
+                questionSrc.questions,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -79,7 +92,8 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool correctAnswer = questionBank[questionNumber].answers;
+                bool correctAnswer = questionSrc.answers;
+                // questionSrc.answers;
                 if (correctAnswer == true) {
                   print('user got it right');
                 } else {
@@ -107,7 +121,8 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool correctAnswer = questionBank[questionNumber].answers;
+                bool correctAnswer = questionSrc.answers;
+                // questionSrc.answers;
                 if (correctAnswer == false) {
                   print('user got it right');
                 } else {
